@@ -1,7 +1,7 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tempfile
-import werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename
 import numpy as np
 import tensorflow as tf
 from keras.preprocessing import image
