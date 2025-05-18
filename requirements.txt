@@ -4,3 +4,4 @@ keras
 numpy
 flask
 gdown
+PIL
