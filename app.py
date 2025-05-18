@@ -1,7 +1,7 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tempfile
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
 import numpy as np
 import tensorflow as tf
 from keras.preprocessing import image
@@ -90,13 +90,13 @@ def upload_file():
     if uploaded_file:
         uploaded_file.save('/tmp' + uploaded_file.filename)
     
-    if uploaded_file.filename != '' and uploaded_file:
+    if uploaded_file.filename != '':
         # Save the uploaded image to a temporary directory
         # image_path = os.path.join('temp', uploaded_file.filename)
-        filename = secure_filename(uploaded_file.filename)
-        temp_dir = '/tmp'
-        image_path = os.path.join(temp_dir, filename)
-        uploaded_file.save(image_path)
+        # # filename = secure_filename(uploaded_file.filename)
+        # temp_dir = '/tmp'
+        # image_path = os.path.join(temp_dir, filename)
+        # uploaded_file.save(image_path)
         
         # Preprocess the uploaded image
         img = preprocess_image(image_path)
