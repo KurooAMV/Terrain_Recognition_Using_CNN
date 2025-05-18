@@ -4,7 +4,7 @@ import tensorflow as tf
 from keras.preprocessing import image
 from flask import Flask, request, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder-'templates')
 
 # Load the trained model
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'terrain_recognition', 'terrain_recognition_model.h5')
