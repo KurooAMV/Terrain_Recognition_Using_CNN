@@ -4,4 +4,4 @@ keras
 numpy
 flask
 gdown
-PIL
+pillow
