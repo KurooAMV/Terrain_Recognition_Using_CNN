@@ -95,7 +95,7 @@ def upload_file():
         # image_path = os.path.join('temp', uploaded_file.filename)
         # # filename = secure_filename(uploaded_file.filename)
         temp_dir = '/tmp'
-        image_path = os.path.join(temp_dir, filename)
+        image_path = os.path.join(temp_dir, uploaded_file.filename)
         # uploaded_file.save(image_path)
         
         # Preprocess the uploaded image
