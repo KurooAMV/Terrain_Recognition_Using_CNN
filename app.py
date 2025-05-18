@@ -88,8 +88,6 @@ def upload_form():
 @app.route('/', methods=['POST'])
 def upload_file():
     uploaded_file = request.files['file']
-    if uploaded_file:
-        uploaded_file.save('/tmp/' + uploaded_file.filename)
     
     if uploaded_file.filename != '':
         # Save the uploaded image to a temporary directory
@@ -97,28 +95,35 @@ def upload_file():
         unique_filename = str(uuid.uuid4()) + file_ext
         image_path = os.path.join('/tmp', unique_filename)
         uploaded_file.save(image_path)
-        # uploaded_file.save(image_path)
-        
-        # Preprocess the uploaded image
-        img = preprocess_image(image_path)
-        
+
+        print("✅ File saved to:", image_path)
+
+        try:
+            # Preprocess the uploaded image
+            img = preprocess_image(image_path)
+            print("✅ Image preprocessed successfully")
+        except Exception as e:
+            print("❌ Image preprocessing failed:", e)
+            return render_template('upload.html', prediction='Image could not be processed. Please upload a valid image.')
+
         # Make predictions on the uploaded image
         predictions = model.predict(img)
-        
+        print("✅ Model predictions:", predictions)
+
         # Get the predicted class (terrain type)
         predicted_class_index = np.argmax(predictions)
-        
-        # Map the class index to the actual terrain type (you should define this mapping)
-        terrain_types = ['grassy', 'marshy', 'rocky', 'sandy', 'snowy']  # Replace with your terrain type labels
+        terrain_types = ['grassy', 'marshy', 'rocky', 'sandy', 'snowy']
         predicted_terrain = terrain_types[predicted_class_index]
-        
-        # Get terrain features based on predicted terrain type
+        print("✅ Predicted terrain:", predicted_terrain)
+
+        # Get terrain features
         terrain_feature_details = terrain_features.get(predicted_terrain, {})
-        
-        # Remove the temporary image file
+
+        # Remove the image
         os.remove(image_path)
-        
-        return render_template('upload.html', 
+
+        # Render result
+        return render_template('upload.html',
                                prediction=f'Predicted Terrain Type: {predicted_terrain}',
                                terrain_details=terrain_feature_details)
     else:
