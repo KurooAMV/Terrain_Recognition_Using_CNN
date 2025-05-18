@@ -7,7 +7,19 @@ from flask import Flask, request, render_template
 app = Flask(__name__, static_folder='static', template_folder-'templates')
 
 # Load the trained model
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'terrain_recognition', 'terrain_recognition_model.h5')
+MODEL_PATH = 'model/terrain_recognition_model.h5'
+GDRIVE_ID = '1gHoNs4ulIA8HAd29f3uRSMTOTXLcV2MQ'
+GDRIVE_URL = f'https://drive.google.com/uc?id={GDRIVE_ID}'
+
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+        # print("Downloading model from Google Drive...")
+        gdown.download(GDRIVE_URL, MODEL_PATH, quiet=False)
+    else:
+        return
+
+download_model()
 model = tf.keras.models.load_model(MODEL_PATH)
 
 # Define a function to preprocess uploaded images
