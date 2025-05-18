@@ -88,7 +88,7 @@ def upload_form():
 def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file:
-        uploaded_file.save('/tmp' + uploaded_file.filename)
+        uploaded_file.save('/tmp/' + uploaded_file.filename)
     
     if uploaded_file.filename != '':
         # Save the uploaded image to a temporary directory
