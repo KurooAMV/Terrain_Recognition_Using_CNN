@@ -3,6 +3,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tempfile
 import numpy as np
 import tensorflow as tf
+from PIL import Image as image
 from keras.preprocessing import image
 from flask import Flask, request, render_template
 import gdown
