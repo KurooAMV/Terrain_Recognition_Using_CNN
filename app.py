@@ -7,7 +7,8 @@ from flask import Flask, request, render_template
 app = Flask(__name__)
 
 # Load the trained model
-model = tf.keras.models.load_model(r"C:\Laptop remains\STUTI\Programa\Stock Predictor\Terrain_Recognition\Terrain_Recognition_Using_CNN\terrain_recognition\terrain_recognition_model.h5")  # Replace with the path to your saved model
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'terrain_recognition', 'terrain_recognition_model.h5')
+model = tf.keras.models.load_model(MODEL_PATH)
 
 # Define a function to preprocess uploaded images
 def preprocess_image(image_path):
