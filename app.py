@@ -1,4 +1,6 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 import numpy as np
 import tensorflow as tf
 from keras.preprocessing import image
