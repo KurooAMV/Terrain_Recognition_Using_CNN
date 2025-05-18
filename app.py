@@ -1,12 +1,12 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tempfile
-# from werkzeug.utils import secure_filename
 import numpy as np
 import tensorflow as tf
 from keras.preprocessing import image
 from flask import Flask, request, render_template
 import gdown
+import uuid
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
@@ -92,10 +92,10 @@ def upload_file():
     
     if uploaded_file.filename != '':
         # Save the uploaded image to a temporary directory
-        # image_path = os.path.join('temp', uploaded_file.filename)
-        # # filename = secure_filename(uploaded_file.filename)
-        temp_dir = '/tmp'
-        image_path = os.path.join(temp_dir, uploaded_file.filename)
+        file_ext = os.path.splitext(uploaded_file.filename)[1]
+        unique_filename = str(uuid.uuid4()) + file_ext
+        image_path = os.path.join('/tmp', unique_filename)
+        uploaded_file.save(image_path)
         # uploaded_file.save(image_path)
         
         # Preprocess the uploaded image
