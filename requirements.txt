@@ -1,7 +1,8 @@
-gunicorn
+streamlit
 tensorflow
 keras
 numpy
-flask
 gdown
 pillow
+os
+pandas
