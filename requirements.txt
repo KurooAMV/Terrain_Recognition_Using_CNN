@@ -4,5 +4,4 @@ keras
 numpy
 gdown
 pillow
-os
 pandas
