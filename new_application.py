@@ -9,8 +9,9 @@ import numpy as np
 import pandas as pd
 
 MODEL_PATH = 'model/terrain_recognition_model.h5'
-GDRIVE_ID = '1gHoNs4ulIA8HAd29f3uRSMTOTXLcV2MQ'
-GDRIVE_URL = f'https://drive.google.com/uc?id={GDRIVE_ID}'
+GDRIVE_ID  = "1gHoNs4ulIA8HAd29f3uRSMTOTXLcV2MQ"
+GDRIVE_URL = f"https://drive.google.com/uc?id={GDRIVE_ID}"
+
 
 def download_model():
     if not os.path.exists(MODEL_PATH):
@@ -85,27 +86,27 @@ if uploaded_file is not None:
     processed_img = preprocess_image(image)
 
     if st.button("Predict"):
-        # model = load_model()
         download_model()
         model = keras.models.load_model(MODEL_PATH)
         predictions = model.predict(processed_img)
-        os.remove(model)
+        # if you really want to delete the .h5 file afterwards:
+        os.remove(MODEL_PATH)
+    
         predicted_class_index = np.argmax(predictions)
-
-        # Define terrain classes in correct order
         terrain_types = ['grassy', 'marshy', 'rocky', 'sandy', 'snowy']
         predicted_terrain = terrain_types[predicted_class_index]
         confidence = np.max(predictions)
-
+    
         st.subheader("Predicted Terrain:")
         st.success(predicted_terrain.capitalize())
         st.write(f"### Confidence Level: {confidence:.2%}")
-
+    
         # Show terrain features as table
-        terrain_feature_details = terrain_features.get(predicted_terrain, {})
+        terrain_feature_details = terrain_features[predicted_terrain]
         df = pd.DataFrame(list(terrain_feature_details.items()), columns=["Feature", "Detail"])
         st.subheader("Terrain Characteristics")
         st.table(df)
+
     
     
     
