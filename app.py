@@ -1,7 +1,7 @@
 import streamlit as st
 import os
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import load_model # type: ignore
+from tensorflow.keras.preprocessing.image import img_to_array # type: ignore
 from PIL import Image
 import numpy as np
 import pandas as pd
@@ -67,7 +67,7 @@ if uploaded_file is not None:
     image = Image.open(uploaded_file)
     thumbnail = image.copy()
     thumbnail.thumbnail((200, 200)) 
-    col1.image(thumbnail, caption="Preview", width=100)
+    col1.image(thumbnail, caption="Preview",use_column_width=True)
     processed_img = preprocess_image(image)
 
     if st.button("Predict"):
