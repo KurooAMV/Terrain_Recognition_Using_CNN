@@ -6,7 +6,7 @@ from PIL import Image
 import numpy as np
 import pandas as pd
 
-model = load_model("terrain_recognition_model.h5")
+model = load_model("model/terrain_recognition_model.h5")
 
 def preprocess_image(pil_image):
     img = pil_image.resize((224, 224)).convert('RGB')
