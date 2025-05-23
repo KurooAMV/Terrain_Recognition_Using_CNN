@@ -32,6 +32,14 @@ terrain_features = {
         'Hydration': 'High',
         'Surface Stability': 'Unstable'
     },
+    'rocky': {
+        'Roughness': 'High',
+        'Slipperiness': 'Low',
+        'Treacherousness': 'Moderate',
+        'Vegetation': 'Low',
+        'Hydration': 'Low',
+        'Surface Stability': 'Stable'
+    },
     'sandy': {
         'Roughness': 'Moderate',
         'Slipperiness': 'Moderate',
@@ -82,7 +90,7 @@ if image:
     predicted_class_index = np.argmax(predictions)
 
     # Define terrain classes in correct order
-    terrain_types = ['grassy', 'marshy', 'rocky', 'snowy']
+    terrain_types = ['grassy', 'marshy', 'rocky', 'sandy', 'snowy']
     predicted_terrain = terrain_types[predicted_class_index]
     confidence = np.max(predictions)
 
