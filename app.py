@@ -60,13 +60,14 @@ terrain_features = {
 
 st.title("Terrain Type Recognition using CNN")
 uploaded_file = st.file_uploader("Upload a terrain image", type=['jpg', 'jpeg', 'png'])
+col1, col2 = st.columns(2)
 
 if uploaded_file is not None:
     # st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
     image = Image.open(uploaded_file)
     thumbnail = image.copy()
     thumbnail.thumbnail((200, 200)) 
-    st.image(thumbnail, caption="Preview", width=100)
+    col1.image(thumbnail, caption="Preview", width=100)
     processed_img = preprocess_image(image)
 
     if st.button("Predict"):
@@ -78,12 +79,12 @@ if uploaded_file is not None:
         predicted_terrain = terrain_types[predicted_class_index]
         confidence = np.max(predictions)
 
-        st.subheader("Predicted Terrain:")
-        st.success(predicted_terrain.capitalize())
-        st.write(f"### Confidence Level: {confidence:.2%}")
+        col2.subheader("Predicted Terrain:")
+        col2.success(predicted_terrain.capitalize())
+        col2.write(f"### Confidence Level: {confidence:.2%}")
 
         # Show terrain features as table
         terrain_feature_details = terrain_features.get(predicted_terrain, {})
         df = pd.DataFrame(list(terrain_feature_details.items()), columns=["Feature", "Detail"])
-        st.subheader("Terrain Characteristics")
-        st.table(df)
+        col2.subheader("Terrain Characteristics")
+        col2.table(df)
