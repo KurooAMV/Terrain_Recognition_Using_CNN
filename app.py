@@ -74,7 +74,7 @@ elif choice == "Use sample images":
         image = Image.open(image_path)
 
 if image:
-    col1.image(image, caption=f"Preview", use_column_width=True)
+    col1.image(image, caption=f"Preview", use_container_width=True)
 
 if image:
     processed_img = preprocess_image(image)
