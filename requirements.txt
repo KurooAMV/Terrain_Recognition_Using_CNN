@@ -1,8 +1,6 @@
-streamlit
+streamlit 
 pandas
-numpy
 tensorflow
-Pillow
-gdown
 keras
-Keras-Preprocessing
+pillow
+numpy
