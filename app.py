@@ -1,26 +1,12 @@
 import streamlit as st
-import gdown
 import os
-import tensorflow as tf
 import keras
 from keras.preprocessing.image import img_to_array
 from PIL import Image
 import numpy as np
 import pandas as pd
 
-MODEL_PATH = 'model/terrain_recognition_model.h5'
-GDRIVE_ID = '1gHoNs4ulIA8HAd29f3uRSMTOTXLcV2MQ'
-GDRIVE_URL = f'https://drive.google.com/uc?id={GDRIVE_ID}'
-
-def download_model():
-    if not os.path.exists(MODEL_PATH):
-        os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
-        gdown.download(GDRIVE_URL, MODEL_PATH, quiet=False)
-
-# MODEL_PATH = r"C:\Laptop remains\STUTI\Programa\Stock Predictor\Python programs\Projects\Terrain_Recognition\Terrain_Recognition_Using_CNN\terrain_recognition\terrain_recognition_model.h5"
-# @st.cache_resource
-# def load_model():
-#     return keras.models.load_model(MODEL_PATH)
+model = keras.models.load_model("model/terrain_recognition_model.h5")
 
 def preprocess_image(pil_image):
     img = pil_image.resize((224, 224)).convert('RGB')
@@ -81,15 +67,10 @@ if uploaded_file is not None:
     thumbnail = image.copy()
     thumbnail.thumbnail((200, 200)) 
     st.image(thumbnail, caption="Preview", width=100)
-    # image = Image.open(uploaded_file)
     processed_img = preprocess_image(image)
 
     if st.button("Predict"):
-        # model = load_model()
-        download_model()
-        model = keras.models.load_model(MODEL_PATH)
         predictions = model.predict(processed_img)
-        os.remove(model)
         predicted_class_index = np.argmax(predictions)
 
         # Define terrain classes in correct order
@@ -106,8 +87,3 @@ if uploaded_file is not None:
         df = pd.DataFrame(list(terrain_feature_details.items()), columns=["Feature", "Detail"])
         st.subheader("Terrain Characteristics")
         st.table(df)
-    
-    
-    
-
-
