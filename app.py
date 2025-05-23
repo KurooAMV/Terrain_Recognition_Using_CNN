@@ -65,9 +65,9 @@ col1, col2 = st.columns(2)
 if uploaded_file is not None:
     # st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
     image = Image.open(uploaded_file)
-    thumbnail = image.copy()
-    thumbnail.thumbnail((200, 200)) 
-    col1.image(thumbnail, caption="Preview",use_column_width=True)
+    # thumbnail = image.copy()
+    # thumbnail.thumbnail((200, 200)) 
+    col1.image(image, caption="Preview",use_container_width=True)
     processed_img = preprocess_image(image)
 
     if st.button("Predict"):
