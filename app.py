@@ -83,29 +83,28 @@ elif choice == "Use sample images":
 
 if image:
     col1.image(image, caption=f"Preview", use_container_width=True)
+    if col1.button("Predict"):
+        processed_img = preprocess_image(image)
+        predictions = model.predict(processed_img)
+        predicted_class_index = np.argmax(predictions)
 
-if image:
-    processed_img = preprocess_image(image)
-    predictions = model.predict(processed_img)
-    predicted_class_index = np.argmax(predictions)
+        # Define terrain classes in correct order
+        terrain_types = ['grassy', 'marshy', 'rocky', 'sandy', 'snowy']
+        predicted_terrain = terrain_types[predicted_class_index]
+        confidence = np.max(predictions)
 
-    # Define terrain classes in correct order
-    terrain_types = ['grassy', 'marshy', 'rocky', 'sandy', 'snowy']
-    predicted_terrain = terrain_types[predicted_class_index]
-    confidence = np.max(predictions)
+        col2.subheader("Predicted Terrain:")
+        col2.success(predicted_terrain.capitalize())
+        col2.write(f"### Confidence Level: {confidence:.2%}")
 
-    col2.subheader("Predicted Terrain:")
-    col2.success(predicted_terrain.capitalize())
-    col2.write(f"### Confidence Level: {confidence:.2%}")
-
-    # Show terrain features as table
-    terrain_feature_details = terrain_features.get(predicted_terrain, {})
-    df = pd.DataFrame(list(terrain_feature_details.items()), columns=["Feature", "Detail"])
-    col2.subheader("Terrain Characteristics")
-    col2.table(df)
-    # prob_df = pd.DataFrame({
-    # "Terrain": terrain_types,
-    # "Probability": predictions[0]
-    # })
-    # col2.bar_chart(prob_df.set_index("Terrain"))
+        # Show terrain features as table
+        terrain_feature_details = terrain_features.get(predicted_terrain, {})
+        df = pd.DataFrame(list(terrain_feature_details.items()), columns=["Feature", "Detail"])
+        col2.subheader("Terrain Characteristics")
+        col2.table(df)
+        # prob_df = pd.DataFrame({
+        # "Terrain": terrain_types,
+        # "Probability": predictions[0]
+        # })
+        # col2.bar_chart(prob_df.set_index("Terrain"))
 
